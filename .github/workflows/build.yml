@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/src/**'
+      - '**/*.gradle'
+      - '**/*.gradle.kts'
+      - '**/gradle.properties'
+      - 'gradle/**'
+      - 'gradlew'
+      - 'gradlew.bat'
+      - '.github/workflows/**'
+      - '.github/actions/**'
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - '**/src/**'
+      - '**/*.gradle'
+      - '**/*.gradle.kts'
+      - '**/gradle.properties'
+      - 'gradle/**'
+      - 'gradlew'
+      - 'gradlew.bat'
+      - '.github/workflows/**'
+      - '.github/actions/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    uses: HeavenCube/HCPlugins-actions/.github/workflows/build.yml@main
+    with:
+      project-name: HCTranslationKey
+      artifact-path: build/libs/HCTranslationKey-*.jar
+      core-source: true
+      source-repositories: HeavenCube/HCPlugins-PlaceholdersExtra
+    secrets: inherit
+

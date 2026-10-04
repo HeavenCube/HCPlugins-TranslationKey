@@ -1,0 +1,51 @@
+HeavenCube Server Plugin License 1.0
+
+Copyright (c) 2026 HeavenCube. All rights reserved.
+
+This license applies to the original HeavenCube material in this repository,
+including its source code and compiled plugin. Third-party material remains
+subject to its own licenses and notices.
+
+1. Purpose and limited permission
+
+The source is publicly available so that others can review it and propose
+improvements to HeavenCube. You may copy, modify, build, and test the plugin
+solely as needed to prepare and submit a contribution to this repository.
+HeavenCube and people expressly authorized by HeavenCube may build, operate,
+and deploy the plugin on official HeavenCube Minecraft servers.
+
+2. Uses requiring prior written permission
+
+Except for the limited permission above and rights that GitHub's Terms of
+Service independently grant for public repositories, you may not, without
+HeavenCube's prior written permission:
+
+* run or deploy the plugin on any other Minecraft server;
+* reuse its code or assets in another project;
+* publish, redistribute, or sublicense the plugin, its source, its JAR, or a
+  modified version outside the contribution process; or
+* remove or misrepresent copyright and license notices.
+
+A GitHub fork permitted by GitHub's Terms of Service does not grant permission
+to run the plugin elsewhere or to reuse or distribute it outside those terms.
+No other rights, including trademark rights, are granted.
+
+3. Contributions
+
+By submitting a contribution, you confirm that you have the right to submit
+it and grant HeavenCube a perpetual, worldwide, irrevocable, nonexclusive,
+royalty-free license to use, reproduce, modify, distribute, and sublicense
+that contribution as part of HeavenCube projects, including proprietary
+versions. You retain ownership of your contribution. HeavenCube is not
+required to accept it. Do not submit third-party material unless its license
+permits these rights; identify any such material and preserve its notices.
+
+4. Additional permission and disclaimer
+
+Request additional permission from the HeavenCube repository owners in
+writing before the intended use. Any additional permission must be granted
+in writing by HeavenCube.
+
+To the extent permitted by law, the material is provided "AS IS", without
+warranty of any kind. HeavenCube is not liable for damages arising from its
+use.

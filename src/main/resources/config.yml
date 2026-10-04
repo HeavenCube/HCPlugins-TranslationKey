@@ -1,0 +1,74 @@
+# MiniMessage exclusivement. Fichier serveur : plugins/HCPlugins/HCTranslationKey.yml
+# Les placeholders externes doivent être explicitement autorisés ET sans effets.
+settings:
+  allowed-placeholders:
+    - player_name
+
+theme:
+  colors:
+    primary: "#FBC62C"
+    secondary: "#FEB967"
+    text: "#CCCCCC"
+    detail: "#C0F5FA"
+    value: "#FFD966"
+    muted: "#888888"
+    success: "#55FF55"
+    warning: "#F2D022"
+    error: "#E62E39"
+
+components:
+  prefix:
+    standard: "<[[hctkey:theme.colors.primary]]><bold>H</bold></[[hctkey:theme.colors.primary]]> <dark_gray>┃</dark_gray>"
+    error: "<[[hctkey:theme.colors.error]]><bold>ERREUR</bold></[[hctkey:theme.colors.error]]> <dark_gray>┃</dark_gray>"
+
+ui:
+  close: "<red>Fermer</red>"
+  back: "<yellow>Retour</yellow>"
+
+menu:
+  title:
+    item: "<gold><bold>{0}</bold> <dark_gray>—</dark_gray> {1}</gold>"
+  detail: "<aqua>{0}</aqua> <dark_gray>:</dark_gray> <yellow>{1}</yellow>"
+
+messages:
+  welcome: "[[hctkey:components.prefix.standard]] <gray>Bienvenue <white>%player_name%</white> sur HeavenCube.</gray>"
+  no-permission:
+    text: "[[hctkey:components.prefix.error]] <gray>Vous n'avez pas la permission.</gray>"
+    sound:
+      key: "minecraft:block.note_block.bass"
+      source: master
+      volume: 0.8
+      pitch: 0.8
+  reward:
+    text: "[[hctkey:components.prefix.standard]] <green>Récompense : {0}</green>"
+    sound:
+      key: "minecraft:entity.player.levelup"
+      volume: 0.5
+      pitch: 1.2
+    actionbar: "<gold>Récompense reçue : {0}</gold>"
+    title:
+      title: "<gold>Félicitations !</gold>"
+      subtitle: "<yellow>{0}</yellow>"
+      fade-in: "500ms"
+      stay: "3s"
+      fade-out: "500ms"
+    bossbar:
+      text: "<yellow>{0}</yellow>"
+      color: yellow
+      overlay: progress
+      progress: 1.0
+      duration: "3s"
+
+progress:
+  experience:
+    progress:
+      length: 20
+      completed: "<green>┃</green>"
+      current: "<yellow>┃</yellow>"
+      remaining: "<dark_gray>┃</dark_gray>"
+      value: "{0}"
+      maximum: "{1}"
+  summary: "[[hctkey:progress.experience:{0}:{1}]] <gray>{0}/{1}</gray>"
+
+aliases:
+  old.close-message: ui.close

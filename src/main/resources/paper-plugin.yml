@@ -1,0 +1,29 @@
+name: HCTranslationKey
+version: "${version}"
+main: fr.noltox.hcplugins.translationkey.HCTranslationKey
+api-version: "26.3"
+description: Contenus français et design tokens partagés HeavenCube.
+author: Noltox
+website: https://github.com/HeavenCube/HCPlugins-TranslationKey
+dependencies:
+  server:
+    HCCore:
+      load: BEFORE
+      required: true
+      join-classpath: true
+    HCPlaceholdersExtra:
+      load: BEFORE
+      required: true
+      join-classpath: true
+    PlaceholderAPI:
+      load: BEFORE
+      required: true
+      join-classpath: true
+    packetevents:
+      load: BEFORE
+      required: true
+      join-classpath: true
+permissions:
+  hcplugins.tkey.admin:
+    description: Administrer, inspecter et tester le catalogue de contenus.
+    default: op
