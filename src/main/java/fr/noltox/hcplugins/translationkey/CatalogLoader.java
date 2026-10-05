@@ -97,7 +97,7 @@ final class CatalogLoader {
         }
         else {
             var node = map(value, path);
-            boolean enriched = !path.startsWith("theme.") && (node.containsKey("value") || node.containsKey("type")
+            boolean enriched = !path.startsWith("theme.") && (node.size() == 1 && node.containsKey("value") || node.containsKey("type")
                     || node.containsKey("text") || node.containsKey("sound")
                     || node.containsKey("actionbar") || node.containsKey("bossbar") || node.containsKey("progress")
                     || node.get("title") instanceof Map<?, ?> t && t.keySet().stream()

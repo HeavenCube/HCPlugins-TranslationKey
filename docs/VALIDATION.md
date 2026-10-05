@@ -19,8 +19,8 @@ Les deux APIs composites sont compileOnly. PacketEvents, PlaceholderAPI et Paper
 
 ## Validation automatisée — 5 octobre 2026
 
-**43 tests passés**, zéro échec, zéro ignoré, compilation `-Xlint:all` sans warning Java.
-La première version avait 35 tests ; l'extension des balises en ajoute huit.
+**44 tests passés**, zéro échec, zéro ignoré, compilation `-Xlint:all` sans warning Java.
+La première version avait 35 tests ; l'extension des balises en ajoute neuf.
 
 Nouvelle exécution réussie avec `netty-buffer:4.2.18.Final`, changement proposé par la
 [PR #1](https://github.com/HeavenCube/HCPlugins-TranslationKey/pull/1).
@@ -45,6 +45,8 @@ Cette dépendance reste limitée au runtime des tests ; le serveur fournit son p
 - Pureté des balises : effets absents en PAPI/aperçu/référence interne, déduplication au dispatch,
   refus des effets injectés par argument et des définitions conflictuelles.
 - Candidat inline invalide : graphe/budgets/valeurs refusés, snapshot antérieur conservé.
+- Détection des feuilles : un groupe `components` avec un enfant `value` reste un groupe,
+  tandis que `value`/`type` constitue une entrée typée.
 
 Les tests PacketEvents n'ouvrent pas de socket et ne démarrent pas Minecraft.
 Ils ne remplacent pas les essais client décrits ci-dessous.
@@ -107,6 +109,18 @@ ont été observées au boot ; elles n'ont pas été modifiées dans cette tâch
 - La validation visuelle de la navigation repose sur la confirmation du joueur obtenue avant ce
   redémarrage ; cette dernière correction ne modifie pas les dialogues.
 - Aucun code ni JAR de Core, PlaceholdersExtra ou des autres plugins modifié pour cette intégration.
+
+## Validation des balises et de la configuration personnalisée
+
+Le fichier actif a évolué depuis la première installation : charte personnalisée, icônes,
+composants, alias réels et signaux sonores. Son contenu n'est pas remplacé par les defaults du dépôt.
+Un candidat convertit uniquement `messages.no-permission`, `messages.reward` et les signaux sonores
+vers la syntaxe inline, en conservant les clés, couleurs, textes, volumes, pitch et durées.
+
+Comparaison Java pure sur les deux fichiers réels : **45 expressions** (arguments représentatifs `1`),
+mêmes clés, mêmes composants Adventure et mêmes listes d'effets ; résolution pure sans effets.
+Ce contrôle détecte aussi la régression possible du groupe `components.value`, désormais protégée par un test.
+Il ne constitue pas une observation audio/visuelle dans un client Minecraft.
 
 ## Scénario de recette réutilisable
 

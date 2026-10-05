@@ -11,6 +11,8 @@ Les groupes imbriqués produisent des identifiants à points ; les collisions en
 En dehors de cet espace, les propriétés enrichies `value`, `type`, `text`, `sound`, `actionbar`, `bossbar`, `progress`
 identifient une entrée enrichie. `title` est une propriété enrichie lorsqu'il contient les champs de titre.
 Éviter ces noms comme sous-groupes ambigus. Les propriétés inconnues d'une entrée enrichie sont rejetées.
+Un groupe comportant un enfant nommé `value` reste un groupe s'il comporte d'autres enfants ordinaires ;
+`type: colored_text` rend explicite une entrée typée. Une feuille `{value: "texte"}` suffit également.
 
 ```yaml
 theme:

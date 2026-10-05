@@ -68,6 +68,21 @@ class InlineTagsTest {
         assertEquals(1, c.render("comparison", TextContext.IDENTITY, true).effects().size());
     }
 
+    @Test void aGroupMayContainAChildNamedValueWithoutBecomingATypedEntry() {
+        var c = CatalogLoader.parse("""
+                components:
+                  prefix: '<gold>H</gold>'
+                  value: '<c:#FFD966>{0}</c>'
+                message:
+                  value: '<sound:block.chain.break><p:components.prefix> <p:components.value:{0}>'
+                  type: colored_text
+                simple: {value: '<p:components.prefix>'}
+                """);
+        assertEquals("H 100", plain(c.render("message:100", TextContext.IDENTITY, true)));
+        assertEquals("H", plain(c.render("simple", TextContext.IDENTITY, false)));
+        assertEquals("100", plain(c.render("components.value:100", TextContext.IDENTITY, false)));
+    }
+
     @Test void soundFormatsAndDefaults() {
         for (String tag : List.of("<sound:block.chain.break>",
                 "<sound:'minecraft:block.chain.break'>", "<sound:minecraft:block.chain.break>",
