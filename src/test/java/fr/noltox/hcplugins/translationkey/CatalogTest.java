@@ -97,7 +97,9 @@ class CatalogTest {
     @Test void defaultConfigurationCompiles() throws Exception {
         try (var input = getClass().getResourceAsStream("/config.yml")) {
             assertNotNull(input);
-            assertTrue(catalog(new String(input.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)).keys().size() > 10);
+            var defaults = catalog(new String(input.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8));
+            assertTrue(defaults.keys().size() > 10);
+            assertTrue(defaults.aliases().isEmpty(), "Aucun alias déprécié ne doit être actif par défaut");
         }
     }
 }

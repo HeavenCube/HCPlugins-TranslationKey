@@ -21,6 +21,10 @@ Les deux APIs composites sont compileOnly. PacketEvents, PlaceholderAPI et Paper
 
 **35 tests passés**, zéro échec, zéro ignoré, compilation `-Xlint:all` sans warning Java.
 
+Nouvelle exécution réussie avec `netty-buffer:4.2.18.Final`, changement proposé par la
+[PR #1](https://github.com/HeavenCube/HCPlugins-TranslationKey/pull/1).
+Cette dépendance reste limitée au runtime des tests ; le serveur fournit son propre Netty.
+
 - Parser : quotes, échappement, deux-points, apostrophes, Unicode, espaces, vide, marqueurs imbriqués.
 - Formulaire : conversion des champs en expression sans altérer quotes/deux-points.
 - Catalogue : références et paramètres imbriqués, arité, aliases, cycles, inconnus.
@@ -67,13 +71,16 @@ Le joueur a confirmé le bon fonctionnement des textes/du plugin et signalé que
 était peu intuitive. Elle a été remplacée par un accueil à trois choix, un catalogue par rubriques,
 une pagination distincte, un formulaire de valeurs et un écran technique séparé.
 
-La confirmation client de cette seconde interface est encore en cours lors de cette rédaction.
+Le joueur a confirmé que cette seconde navigation est plus claire.
 Aucun test de charge spark/JFR n'a été exécuté. Aucun gain chiffré n'est revendiqué.
 Les permissions refusées, un kick réel et la saturation réseau n'ont pas été testés sur le joueur ;
 les tests automatisés ne sont pas présentés comme une observation visuelle de ces scénarios.
 
 Les logs incluent volontairement une erreur de catalogue pendant le test de rollback.
-L'avertissement d'alias au chargement est attendu pour l'exemple `old.close-message`.
+L'avertissement d'alias venait de l'exemple actif `old.close-message`, désormais retiré des valeurs
+par défaut : `aliases: {}`. Les véritables alias configurés restent signalés au chargement.
+Le même exemple a été retiré du fichier actif sur le serveur ; reload réussi à 07:06:48,
+sans avertissement d'alias. La clé `ui.close` et les autres contenus sont conservés.
 Des erreurs de configuration d'autres plugins, notamment un modèle HeadBlocks/ModelEngine absent,
 ont été observées au boot ; elles n'ont pas été modifiées dans cette tâche.
 

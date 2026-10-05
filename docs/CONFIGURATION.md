@@ -164,6 +164,9 @@ Aucune expression mathématique/script n'est évaluée. `text` et `progress` son
 
 ## Alias et validation
 
+Par défaut, `aliases: {}` : aucun alias déprécié actif. L'exemple suivant est facultatif,
+à utiliser uniquement pour maintenir une ancienne clé réellement employée.
+
 ```yaml
 aliases:
   old.close-message: ui.close

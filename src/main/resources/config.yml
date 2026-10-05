@@ -70,5 +70,6 @@ progress:
       maximum: "{1}"
   summary: "[[hctkey:progress.experience:{0}:{1}]] <gray>{0}/{1}</gray>"
 
-aliases:
-  old.close-message: ui.close
+# Facultatif : déclarer ici uniquement de véritables anciennes clés à maintenir.
+# Exemple : aliases: {old.close-message: ui.close}
+aliases: {}

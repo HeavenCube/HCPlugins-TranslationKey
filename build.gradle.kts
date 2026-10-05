@@ -15,7 +15,7 @@ dependencies {
     testImplementation("fr.noltox.hcplugins:placeholders-api")
     testImplementation("com.github.retrooper:packetevents-spigot:2.14.0")
     testImplementation("me.clip:placeholderapi:2.12.3")
-    testRuntimeOnly("io.netty:netty-buffer:4.2.16.Final")
+    testRuntimeOnly("io.netty:netty-buffer:4.2.18.Final")
     testImplementation("org.junit.jupiter:junit-jupiter:6.1.3")
     testImplementation("fr.noltox.hcplugins:core-api")
     testImplementation("io.papermc.paper:paper-api:26.3.build.+")
