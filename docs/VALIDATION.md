@@ -84,6 +84,24 @@ sans avertissement d'alias. La clé `ui.close` et les autres contenus sont conse
 Des erreurs de configuration d'autres plugins, notamment un modèle HeadBlocks/ModelEngine absent,
 ont été observées au boot ; elles n'ont pas été modifiées dans cette tâche.
 
+## Publication et installation finales — 5 octobre 2026
+
+- Changement Netty de la PR #1 intégré directement à `main` dans `688b596` ; PR ensuite fermée,
+  sans fusion manuelle. Netty reste exclusivement une dépendance de test.
+- [CI du commit 688b596](https://github.com/HeavenCube/HCPlugins-TranslationKey/actions/runs/37266379850) : réussie.
+- [Release v2](https://github.com/HeavenCube/HCPlugins-TranslationKey/releases/tag/v2) :
+  version embarquée `2026.10.05-b2`, asset fixe `HCTranslationKey.jar`.
+- Asset téléchargé depuis cette release, inspecté (Paper 26.3, aucune classe de dépendance embarquée),
+  puis transféré vers `plugins/HCTranslationKey.jar`. SHA-256 local/distant identique :
+  `5df692bb9e41c3a47cf4595e5d6f79b5d0e3209a09a15c1d81308ed7b6c5b00a`.
+- Ancien JAR désactivé à 07:08:48 sans exception dans la séquence de désactivation.
+  Activation à 07:09:20, 20 clés/alias, aucun avertissement HCTranslationKey.
+- À 07:09:41 : `ver HCTranslationKey` confirme la release ; `validate` réussit ; `get ui.close`
+  retourne `<red>Fermer</red>`. Aucun joueur connecté durant cette validation finale.
+- La validation visuelle de la navigation repose sur la confirmation du joueur obtenue avant ce
+  redémarrage ; cette dernière correction ne modifie pas les dialogues.
+- Aucun code ni JAR de Core, PlaceholdersExtra ou des autres plugins modifié pour cette intégration.
+
 ## Scénario de recette réutilisable
 
 1. Installer le JAR fixe avec ses dépendances, redémarrer et attendre l'état online.
