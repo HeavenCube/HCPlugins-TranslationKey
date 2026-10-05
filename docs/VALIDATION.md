@@ -122,6 +122,17 @@ mêmes clés, mêmes composants Adventure et mêmes listes d'effets ; résolutio
 Ce contrôle détecte aussi la régression possible du groupe `components.value`, désormais protégée par un test.
 Il ne constitue pas une observation audio/visuelle dans un client Minecraft.
 
+- [CI du correctif de groupes 1c96069](https://github.com/HeavenCube/HCPlugins-TranslationKey/actions/runs/37307874034) : réussie.
+- [Release v4](https://github.com/HeavenCube/HCPlugins-TranslationKey/releases/tag/v4), version `2026.10.05-b4`.
+- Asset de cette release inspecté puis déposé sous le nom fixe `plugins/HCTranslationKey.jar` ;
+  SHA-256 local/distant identique : `3f3230685127991edd4cff25de5ebcf787d1c15420ac87d914c2997b16ef409e`.
+- Trois remplacements ciblés dans le fichier actif : messages no-permission/reward et groupe signals.
+  Nouvelle copie relue depuis le serveur : même comparaison réussie de 45 expressions.
+- Le serveur était déjà arrêté avant ce déploiement. Son démarrage est en attente de confirmation ;
+  le chargement et les effets côté client de cette nouvelle version ne sont pas encore vérifiés en jeu.
+- La release v3 n'a pas été installée : la vérification du fichier personnalisé a révélé l'ambiguïté
+  `components.value`, corrigée avant le déploiement v4.
+
 ## Scénario de recette réutilisable
 
 1. Installer le JAR fixe avec ses dépendances, redémarrer et attendre l'état online.
