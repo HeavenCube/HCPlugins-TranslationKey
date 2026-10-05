@@ -9,10 +9,11 @@ import java.util.List;
 
 final class Effects {
     private Effects() {}
-    sealed interface Effect permits Audio, Actionbar, Title, Bar {}
+    sealed interface Effect permits Audio, Actionbar, Title, Subtitle, Bar {}
     record Audio(Key key, Sound.Source source, float volume, float pitch) implements Effect {}
     record Actionbar(Component text) implements Effect {}
     record Title(Component title, Component subtitle, Duration fadeIn, Duration stay, Duration fadeOut) implements Effect {}
+    record Subtitle(Component text, Duration fadeIn, Duration stay, Duration fadeOut) implements Effect {}
     record Bar(Component text, BossBar.Color color, BossBar.Overlay overlay, float progress, long ticks) implements Effect {}
     record Spec(Audio sound, Template actionbar, TitleSpec title, BarSpec bossbar) {
         static final Spec EMPTY = new Spec(null, null, null, null);
@@ -24,6 +25,6 @@ final class Effects {
             return List.copyOf(result);
         }
     }
-    record TitleSpec(Template title, Template subtitle, Duration fadeIn, Duration stay, Duration fadeOut) {}
+    record TitleSpec(Template title, Template subtitle, Duration fadeIn, Duration stay, Duration fadeOut, boolean subtitleOnly) {}
     record BarSpec(Template text, BossBar.Color color, BossBar.Overlay overlay, float progress, long ticks) {}
 }

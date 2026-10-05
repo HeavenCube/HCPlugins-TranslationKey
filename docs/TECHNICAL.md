@@ -6,6 +6,7 @@
 | --- | --- |
 | `HCTranslationKey` | Lifecycle, handles Core/PHE/PacketEvents, chargement asynchrone |
 | `CatalogLoader` | YAML strict, types, graphe, arité, effets, constantes précompilées |
+| `InlineTags` | Normalisation des balises de configuration vers références et specs existantes |
 | `CatalogStore` | Publication volatile atomique ; rollback implicite si construction échoue |
 | `Catalog` / `Entry` | Snapshot immuable et résolution |
 | `Expression`, `Markers`, `Template` | Grammaire bornée et templates préparés au chargement |
@@ -101,6 +102,9 @@ Les helpers Core possèdent le chemin et la création initiale du fichier.
 
 Les entrées statiques et leurs composants sont précompilés ; aucun cache de joueurs permanent.
 Les templates de configuration sont préparés une fois.
+Les balises inline sont extraites au chargement, puis publiées sous forme de specs typées.
+`value`/`colored_text` rejoint le même pipeline que `text` ; aucun second interpréteur d'effets au runtime.
+Un sous-titre seul utilise `sendTitlePart(SUBTITLE)` et les durées, sans effacer le titre actif.
 Le catalogue réalise des lookups par hash, pas un scan de toutes les clés.
 La recherche/liste admin est seule à parcourir les clés ; résultats bornés/paginés.
 Les résultats PAPI externes sont réutilisés dans un même traitement, sans cache périmé entre traitements.

@@ -22,6 +22,8 @@
 - PAPI est toujours pur. Ne jamais dispatch des effets depuis resolve().
 - PAPI externe : allowlist de valeurs sans effets ; pas de résolution récursive ; jamais sur Netty.
 - Effets uniquement des clés de premier niveau, dédupliqués par traitement ; références internes pures.
+- Balises inline et value/colored_text compilés au chargement vers les mêmes specs ; jamais d'effets
+  interprétés depuis un argument/PAPI ni de seconde chaîne de dispatch. Tester références, arité et rollback.
 - Config unique `plugins/HCPlugins/HCTranslationKey.yml`, aucun système de migration.
 - Catalogue immuable, publication atomique après validation complète. Ancien snapshot préservé à l'échec.
 - Limites de taille/profondeur/travail obligatoires. Ne pas remplacer le parseur par split(":").

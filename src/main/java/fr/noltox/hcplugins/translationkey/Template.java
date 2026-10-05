@@ -12,8 +12,8 @@ record Template(String source, List<Part> parts, Set<Integer> parameters, Set<St
     record Argument(int index) implements Part {}
     record Reference(String key, List<Template> arguments) implements Part {}
 
-    static Template compile(String source) { return compile(source, 0, true); }
-    static Template argument(String source) { return compile(source, 0, false); }
+    static Template compile(String source) { return compile(InlineTags.text(source), 0, true); }
+    static Template argument(String source) { return compile(InlineTags.text(source), 0, false); }
     private static Template compile(String source, int depth, boolean parametersEnabled) {
         Limits.depth(depth); Limits.text(source);
         var parts = new ArrayList<Part>();
@@ -27,7 +27,7 @@ record Template(String source, List<Part> parts, Set<Integer> parameters, Set<St
                 Expression expr = Expression.parse(source.substring(i + Markers.OPEN.length(), end - 2));
                 var arguments = new ArrayList<Template>();
                 for (String argument : expr.arguments()) {
-                    Template t = compile(argument, depth + 1, parametersEnabled);
+                    Template t = compile(InlineTags.text(argument), depth + 1, parametersEnabled);
                     arguments.add(t); parameters.addAll(t.parameters()); references.addAll(t.references());
                 }
                 parts.add(new Reference(expr.key(), List.copyOf(arguments)));

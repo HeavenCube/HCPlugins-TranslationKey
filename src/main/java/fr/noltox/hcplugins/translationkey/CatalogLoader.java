@@ -85,10 +85,20 @@ final class CatalogLoader {
         Limits.depth(depth);
         if (!Expression.validKey(path)) throw error(path, "identifiant invalide");
         Entry entry;
-        if (value instanceof String s) entry = Entry.create(path, Template.compile(s), null, Effects.Spec.EMPTY);
+        if (value instanceof String s) {
+            InlineTags.Content inline = InlineTags.compile(s);
+            if (!inline.effects().isEmpty()) {
+                if (path.startsWith("theme.")) throw error(path, "les tokens du thème ne peuvent pas porter d'effets");
+                var node = new LinkedHashMap<String, Object>(inline.effects());
+                node.put("text", inline.text());
+                flatten(path, node, entries, depth); return;
+            }
+            entry = Entry.create(path, Template.compile(inline.text()), null, Effects.Spec.EMPTY);
+        }
         else {
             var node = map(value, path);
-            boolean enriched = !path.startsWith("theme.") && (node.containsKey("text") || node.containsKey("sound")
+            boolean enriched = !path.startsWith("theme.") && (node.containsKey("value") || node.containsKey("type")
+                    || node.containsKey("text") || node.containsKey("sound")
                     || node.containsKey("actionbar") || node.containsKey("bossbar") || node.containsKey("progress")
                     || node.get("title") instanceof Map<?, ?> t && t.keySet().stream()
                         .anyMatch(Set.of("title", "subtitle", "fade-in", "stay", "fade-out")::contains));
@@ -97,7 +107,21 @@ final class CatalogLoader {
                 node.forEach((key, child) -> flatten(path + "." + key, child, entries, depth + 1));
                 return;
             }
-            only(node, path, "text", "sound", "actionbar", "title", "bossbar", "progress");
+            only(node, path, "value", "type", "text", "sound", "actionbar", "title", "bossbar", "progress");
+            if (node.containsKey("type") && !node.containsKey("value")) throw error(path, "type nécessite value");
+            if (node.containsKey("value")) {
+                if (node.containsKey("text")) throw error(path, "value et text sont exclusifs");
+                if (!string(node, "type", "colored_text", path).equals("colored_text"))
+                    throw error(path + ".type", "seul colored_text est pris en charge");
+                node.put("text", node.remove("value")); node.remove("type");
+            }
+            if (node.containsKey("text")) {
+                InlineTags.Content inline = InlineTags.compile(string(node, "text", null, path));
+                node.put("text", inline.text());
+                for (var effect : inline.effects().entrySet())
+                    if (node.putIfAbsent(effect.getKey(), effect.getValue()) != null)
+                        throw error(path + "." + effect.getKey(), "effet défini à la fois dans le texte et en propriété");
+            }
             var progress = node.containsKey("progress") ? progress(map(node.get("progress"), path + ".progress"), path + ".progress") : null;
             if (progress != null && node.containsKey("text")) throw error(path, "text et progress sont exclusifs");
             Effects.Audio sound = null;
@@ -114,7 +138,8 @@ final class CatalogLoader {
                 var t = map(node.get("title"), path + ".title");
                 only(t, path + ".title", "title", "subtitle", "fade-in", "stay", "fade-out");
                 title = new Effects.TitleSpec(template(t, "title", "", path), template(t, "subtitle", "", path),
-                        duration(t, "fade-in", "500ms", path), duration(t, "stay", "3s", path), duration(t, "fade-out", "500ms", path));
+                        duration(t, "fade-in", "500ms", path), duration(t, "stay", "3s", path), duration(t, "fade-out", "500ms", path),
+                        !t.containsKey("title") && t.containsKey("subtitle"));
             }
             Effects.BarSpec bar = null;
             if (node.containsKey("bossbar")) {

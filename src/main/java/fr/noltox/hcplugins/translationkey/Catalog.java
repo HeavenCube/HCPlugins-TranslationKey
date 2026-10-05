@@ -45,7 +45,8 @@ final class Catalog {
             if (spec.actionbar() != null) effects.add(new Effects.Actionbar(component(spec.actionbar(), arguments, budget)));
             if (spec.title() != null) {
                 var t = spec.title();
-                effects.add(new Effects.Title(component(t.title(), arguments, budget), component(t.subtitle(), arguments, budget),
+                if (t.subtitleOnly()) effects.add(new Effects.Subtitle(component(t.subtitle(), arguments, budget), t.fadeIn(), t.stay(), t.fadeOut()));
+                else effects.add(new Effects.Title(component(t.title(), arguments, budget), component(t.subtitle(), arguments, budget),
                         t.fadeIn(), t.stay(), t.fadeOut()));
             }
             if (spec.bossbar() != null) {

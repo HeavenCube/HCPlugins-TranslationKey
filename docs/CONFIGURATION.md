@@ -8,7 +8,7 @@ Les groupes imbriqués produisent des identifiants à points ; les collisions en
 
 `settings` et `aliases` sont réservés à la racine.
 `theme.*` constitue un espace de tokens/groupes simples : il autorise notamment la couleur `theme.colors.text`.
-En dehors de cet espace, les propriétés enrichies `text`, `sound`, `actionbar`, `bossbar`, `progress`
+En dehors de cet espace, les propriétés enrichies `value`, `type`, `text`, `sound`, `actionbar`, `bossbar`, `progress`
 identifient une entrée enrichie. `title` est une propriété enrichie lorsqu'il contient les champs de titre.
 Éviter ces noms comme sous-groupes ambigus. Les propriétés inconnues d'une entrée enrichie sont rejetées.
 
@@ -27,10 +27,72 @@ menu:
     item: "<gold>{0}</gold> <gray>— {1}</gray>"
 ```
 
-MiniMessage strict : fermer les tags ouverts. Les tags natifs Adventure sont disponibles ;
-les tags propriétaires d'ItsMyConfig (`<p:...>`, `<smallcaps>`, etc.) ne sont pas réimplémentés.
+MiniMessage strict : fermer les tags de style ouverts. Les tags natifs Adventure sont disponibles,
+notamment `<c:#E62E39>texte</c>` (alias natif de couleur). Les balises de contenu ci-dessous sont autonomes.
 Un texte simple et les couleurs hexadécimales sont des valeurs valides.
 Aucune sérialisation legacy, aucun format interne à base de `&`.
+
+## Messages avec balises
+
+Syntaxe conseillée pour un message avec effets :
+
+```yaml
+prefix: "<gold>HeavenCube</gold>"
+erreur-impossible:
+  value: "<sound:block.chain.break:1.00:0.50><p:prefix> <c:#E62E39>Action impossible, {0}…</c>"
+  type: colored_text
+erreur-divers:
+  value: "<sound:block.chain.break:1.00:0.50><p:prefix> <c:#E62E39>{0}</c>"
+  type: colored_text
+msg-reward:
+  value: "<sound:block.trial_spawner.eject_item:1.00:1.00><p:prefix> <c:#CCCCCC>Tu viens de recevoir la récompense {0} !</c>"
+  type: colored_text
+```
+
+`type: colored_text` est facultatif. Une chaîne simple fonctionne également :
+
+```yaml
+erreur-divers: "<sound:block.chain.break:1:0.5><p:prefix> <c:#E62E39>{0}</c>"
+```
+
+| Balise | Utilisation |
+| --- | --- |
+| `<p:clé[:arguments]>` | Contenu d'une clé du catalogue ; refs/paramètres/cycles validés, jamais ses effets |
+| `<papi:player_name>` | Identifiant PAPI sans `%`, toujours soumis à `allowed-placeholders` |
+| `<c:#E62E39>texte</c>` | Couleur MiniMessage native ; couleur nommée également acceptée |
+| `<sound:block.chain.break[:volume:pitch]>` | Son, volume/pitch par défaut 1, source master |
+| `<actionbar:"<gold>{0}</gold>">` | Texte au-dessus de la barre d'outils |
+| `<title:"Titre"[:"Sous-titre"]>` | Titre, sous-titre facultatif |
+| `<title:10:70:20:"Titre":"Sous-titre">` | Durées fade-in/stay/fade-out en ticks |
+| `<subtitle:"Sous-titre">` ou `<subtitle:10:70:20:"Sous-titre">` | Mise à jour du sous-titre seul |
+| `<bossbar:"Texte":50:RED:SOLID:100>` | Progression **0..100 %**, couleur, style et durée en ticks |
+
+Un tick vaut 50 ms. Durées par défaut : titre 10/60/10 ticks, bossbar 60 ticks.
+Styles bossbar : SOLID, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20.
+La version structurée `bossbar.progress` reste un ratio `0..1`.
+Les animations de progression `progress`/`reverse`, annulation, delay/repeat et les transformations
+smallcaps/quote/plain/uppercase/lowercase ne font pas partie de cette syntaxe.
+
+Son : `block.chain.break`, `minecraft:block.chain.break` ou
+`'heavencube:ui.click'` pour un son de pack. Une clé namespaced peut être quotée :
+`<sound:'minecraft:block.chain.break':1:0.5>`. Les nombres du son sont fixes, validés au chargement.
+Les anciens noms Bukkit en majuscules sont refusés avec un message explicite : utiliser la clé Minecraft
+exacte pour préserver les underscores, par exemple `entity.experience_orb.pickup`.
+
+Les arguments contenant `:` ou des balises se mettent entre quotes :
+`<p:menu.title.item:"Métiers : pêche":Pêcheur>`. Les effets peuvent eux-mêmes contenir `{0}`,
+`<p:...>` et `<papi:...>` dans leur **texte**, avec les mêmes contraintes que les messages.
+Un effet n'est pas autorisé à l'intérieur du texte d'un autre effet.
+Une entrée possède au plus un son, une actionbar, un titre **ou** sous-titre, et une bossbar.
+Une définition inline et structurée du même effet est une erreur explicite.
+`value` et `text` sont exclusifs ; les configs structurées existantes restent valides.
+
+Les balises de configuration sont compilées au chargement : aucun accès YAML ou interpréteur
+d'effets supplémentaire dans le traitement réseau. Le texte PAPI et `get` retire les effets,
+sans les jouer. Pour envoyer texte + son, utiliser `[[hctkey:erreur-divers:Action impossible]]`
+ou `/hcplugins tkey test erreur-divers:Action impossible --player Noltiii`.
+Les balises brutes envoyées par un plugin tiers ne sont pas interceptées : elles appartiennent
+aux **valeurs du catalogue**. Le marqueur hctkey reste le déclencheur explicite de traitement.
 
 ## Grammaire
 

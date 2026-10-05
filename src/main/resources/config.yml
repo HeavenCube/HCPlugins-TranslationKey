@@ -31,33 +31,11 @@ menu:
   detail: "<aqua>{0}</aqua> <dark_gray>:</dark_gray> <yellow>{1}</yellow>"
 
 messages:
-  welcome: "[[hctkey:components.prefix.standard]] <gray>Bienvenue <white>%player_name%</white> sur HeavenCube.</gray>"
-  no-permission:
-    text: "[[hctkey:components.prefix.error]] <gray>Vous n'avez pas la permission.</gray>"
-    sound:
-      key: "minecraft:block.note_block.bass"
-      source: master
-      volume: 0.8
-      pitch: 0.8
+  welcome: "<p:components.prefix.standard> <gray>Bienvenue <white><papi:player_name></white> sur HeavenCube.</gray>"
+  no-permission: "<sound:block.note_block.bass:0.8:0.8><p:components.prefix.error> <gray>Vous n'avez pas la permission.</gray>"
   reward:
-    text: "[[hctkey:components.prefix.standard]] <green>Récompense : {0}</green>"
-    sound:
-      key: "minecraft:entity.player.levelup"
-      volume: 0.5
-      pitch: 1.2
-    actionbar: "<gold>Récompense reçue : {0}</gold>"
-    title:
-      title: "<gold>Félicitations !</gold>"
-      subtitle: "<yellow>{0}</yellow>"
-      fade-in: "500ms"
-      stay: "3s"
-      fade-out: "500ms"
-    bossbar:
-      text: "<yellow>{0}</yellow>"
-      color: yellow
-      overlay: progress
-      progress: 1.0
-      duration: "3s"
+    value: '<sound:entity.player.levelup:0.5:1.2><p:components.prefix.standard> <green>Récompense : {0}</green><actionbar:"<gold>Récompense reçue : {0}</gold>"><title:10:60:10:"<gold>Félicitations !</gold>":"<yellow>{0}</yellow>"><bossbar:"<yellow>{0}</yellow>":100:YELLOW:SOLID:60>'
+    type: colored_text
 
 progress:
   experience:

@@ -6,6 +6,20 @@ Couleurs, composants MiniMessage, templates, références, barres de progression
 **`plugins/HCPlugins/HCTranslationKey.yml`**. Aucune migration automatique, aucune API publique Java,
 aucun système multilingue. Implémentation indépendante ; aucun code ItsMyConfig repris.
 
+Les effets peuvent être écrits directement dans le message :
+
+```yaml
+prefix: "<gold>HeavenCube</gold>"
+erreur-divers:
+  value: "<sound:block.chain.break:1:0.5><p:prefix> <c:#E62E39>{0}</c>"
+  type: colored_text
+```
+
+La forme courte `erreur-divers: "<sound:...>..."` fonctionne aussi. `<p:...>` référence une clé,
+`<papi:...>` un placeholder autorisé. Sons, actionbars, titres, sous-titres et bossbars ont une
+[syntaxe en balises](docs/CONFIGURATION.md#messages-avec-balises).
+Envoyer `[[hctkey:erreur-divers:Action impossible]]` déclenche le son ; le placeholder PAPI donne le texte sans effet.
+
 ## Deux usages distincts
 
 | Usage | Syntaxe | Effets |

@@ -19,7 +19,8 @@ Les deux APIs composites sont compileOnly. PacketEvents, PlaceholderAPI et Paper
 
 ## Validation automatisée — 5 octobre 2026
 
-**35 tests passés**, zéro échec, zéro ignoré, compilation `-Xlint:all` sans warning Java.
+**43 tests passés**, zéro échec, zéro ignoré, compilation `-Xlint:all` sans warning Java.
+La première version avait 35 tests ; l'extension des balises en ajoute huit.
 
 Nouvelle exécution réussie avec `netty-buffer:4.2.18.Final`, changement proposé par la
 [PR #1](https://github.com/HeavenCube/HCPlugins-TranslationKey/pull/1).
@@ -39,6 +40,11 @@ Cette dépendance reste limitée au runtime des tests ; le serveur fournit son p
 - PacketEvents : encode/decode réels des wrappers sous protocole 26.3 avec buffers de test,
   métadonnées bossbar/titres, absence de référence de buffer dans le wrapper différé,
   exclusion inventaires et chat signé.
+- Balises : les trois exemples value/colored_text, couleurs natives, refs/quotes/échappements/paramètres,
+  allowlist PAPI, sons namespaced, effets et durées en ticks, bossbar en pourcentage.
+- Pureté des balises : effets absents en PAPI/aperçu/référence interne, déduplication au dispatch,
+  refus des effets injectés par argument et des définitions conflictuelles.
+- Candidat inline invalide : graphe/budgets/valeurs refusés, snapshot antérieur conservé.
 
 Les tests PacketEvents n'ouvrent pas de socket et ne démarrent pas Minecraft.
 Ils ne remplacent pas les essais client décrits ci-dessous.
